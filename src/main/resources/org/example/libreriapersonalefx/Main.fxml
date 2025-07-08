@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:controller="org.example.libreriapersonalefx.HelloController"
+      prefHeight="400.0" prefWidth="640.0"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1">
+
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Open…" />
+                        <Menu mnemonicParsing="false" text="Open Recent" />
+                        <SeparatorMenuItem />
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Save As…" />
+                        <MenuItem mnemonicParsing="false" text="Revert" />
+                        <SeparatorMenuItem />
+                        <MenuItem mnemonicParsing="false" text="Preferences…" />
+                        <SeparatorMenuItem />
+                        <MenuItem mnemonicParsing="false" text="Quit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Undo" />
+                        <MenuItem mnemonicParsing="false" text="Redo" />
+                        <SeparatorMenuItem />
+                        <MenuItem mnemonicParsing="false" text="Cut" />
+                        <MenuItem mnemonicParsing="false" text="Copy" />
+                        <MenuItem mnemonicParsing="false" text="Paste" />
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <SeparatorMenuItem />
+                        <MenuItem mnemonicParsing="false" text="Select All" />
+                        <MenuItem mnemonicParsing="false" text="Unselect All" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+
+        <AnchorPane VBox.vgrow="ALWAYS">
+            <children>
+
+                <Button layoutX="151.0" layoutY="2.0" mnemonicParsing="false" text="Search" />
+
+                <TextField layoutY="5.0" />
+
+                <Button layoutX="276.0" layoutY="2.0" mnemonicParsing="false" onAction="#onHelloButtonClick" text="Inserisci" />
+
+                <Label layoutX="155.0" layoutY="177.0" text="Drag components from Library here…" textFill="#9f9f9f" textAlignment="CENTER" alignment="CENTER">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+
+                <TableView layoutY="31.0" prefHeight="370.0" prefWidth="670.0">
+                    <columns>
+                        <TableColumn prefWidth="75.0" text="Titolo" />
+                        <TableColumn prefWidth="75.0" text="Autore" />
+                        <TableColumn prefWidth="75.0" text="ISBN" />
+                        <TableColumn prefWidth="75.0" text="Genere" />
+                        <TableColumn prefWidth="75.0" text="Valutazione" />
+                        <TableColumn prefWidth="75.0" text="Stato" />
+                    </columns>
+                </TableView>
+
+            </children>
+        </AnchorPane>
+
+        <ButtonBar prefHeight="27.0" prefWidth="670.0" />
+
+    </children>
+</VBox>
