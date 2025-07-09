@@ -4,10 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:controller="org.example.libreriapersonalefx.HelloController"
-      prefHeight="400.0" prefWidth="640.0"
-      xmlns="http://javafx.com/javafx/17.0.12"
-      xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.libreriapersonalefx.HelloController">
 
     <children>
         <MenuBar VBox.vgrow="NEVER">
@@ -57,9 +54,9 @@
 
                 <TextField layoutY="5.0" />
 
-                <Button layoutX="276.0" layoutY="2.0" mnemonicParsing="false" onAction="#onHelloButtonClick" text="Inserisci" />
+                <Button layoutX="276.0" layoutY="2.0" mnemonicParsing="false" onAction="#onVaiAggiungiLibroClick" text="Inserisci" />
 
-                <Label layoutX="155.0" layoutY="177.0" text="Drag components from Library here…" textFill="#9f9f9f" textAlignment="CENTER" alignment="CENTER">
+                <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f">
                     <font>
                         <Font size="18.0" />
                     </font>

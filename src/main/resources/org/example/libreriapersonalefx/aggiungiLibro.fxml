@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.libreriapersonalefx.AggiungiLibroController">
+    <children>
+        <!-- VBox per disporre gli elementi in verticale -->
+        <VBox spacing="10" alignment="CENTER" prefWidth="600.0" prefHeight="400.0">
+
+            <!-- Ogni Label e TextField saranno in una riga separata -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Nome" />
+                <TextField fx:id="nomeTextField" promptText="Inserisci il nome" />
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Cognome" />
+                <TextField fx:id="cognomeTextField" promptText="Inserisci il cognome" />
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Indirizzo" />
+                <TextField fx:id="indirizzoTextField" promptText="Inserisci l'indirizzo" />
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Telefono" />
+                <TextField fx:id="telefonoTextField" promptText="Inserisci il numero di telefono" />
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Email" />
+                <TextField fx:id="emailTextField" promptText="Inserisci l'email" />
+            </HBox>
+
+            <!-- Pulsante di conferma centrato -->
+            <Button text="Conferma" onAction="#handleConferma" maxWidth="200.0" />
+        </VBox>
+    </children>
+</AnchorPane>
