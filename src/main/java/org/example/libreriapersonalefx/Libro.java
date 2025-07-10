@@ -2,8 +2,6 @@ package org.example.libreriapersonalefx;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import org.example.libreriapersonalefx.Stato;
-import org.example.libreriapersonalefx.Valutazione;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +14,7 @@ public class Libro implements Observable {
     private Valutazione valutazionePersonale;
     private Stato statoLettura;
 
-    private BooleanProperty selezionato = new SimpleBooleanProperty(false);
-
+    private final BooleanProperty selezionato = new SimpleBooleanProperty(false);
     private final List<Observer> observers = new ArrayList<>();
 
     public Libro(String titolo, String autore, String ISBN, String genere, Valutazione valutazione, Stato stato) {
@@ -27,8 +24,12 @@ public class Libro implements Observable {
         this.genere = genere;
         this.valutazionePersonale = valutazione;
         this.statoLettura = stato;
+
+        // Se cambia la proprietà, notifica gli observer
+        selezionato.addListener((obs, oldVal, newVal) -> notifyObservers());
     }
 
+    // Getter standard
     public String getTitolo() { return titolo; }
     public String getAutore() { return autore; }
     public String getISBN() { return ISBN; }
@@ -36,14 +37,20 @@ public class Libro implements Observable {
     public Valutazione getValutazionePersonale() { return valutazionePersonale; }
     public Stato getStatoLettura() { return statoLettura; }
 
-    // Getter e setter per selezionato con notifica observer
+    // Checkbox property
+    public boolean isSelezionato() {
+        return selezionato.get();
+    }
+
+    public void setSelezionato(boolean value) {
+        selezionato.set(value);
+    }
 
     public BooleanProperty selezionatoProperty() {
         return selezionato;
     }
 
-
-
+    // Observer pattern
     @Override
     public void addObserver(Observer o) {
         if (!observers.contains(o)) {

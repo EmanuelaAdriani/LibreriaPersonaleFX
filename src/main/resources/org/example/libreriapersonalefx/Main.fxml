@@ -22,13 +22,6 @@
                         <MenuItem text="Quit" />
                     </items>
                 </Menu>
-                <Menu text="Edit">
-                    <items>
-                        <MenuItem text="Cut" />
-                        <MenuItem text="Copy" />
-                        <MenuItem text="Paste" />
-                    </items>
-                </Menu>
                 <Menu text="Help">
                     <items>
                         <MenuItem text="About" />
@@ -50,7 +43,7 @@
                 <Button text="Inserisci" onAction="#onVaiAggiungiLibroClick" />
             </HBox>
 
-            <TableView fx:id="libriTableView" VBox.vgrow="ALWAYS">
+            <TableView fx:id="libriTableView" VBox.vgrow="ALWAYS" editable="true">
                 <columns>
                     <TableColumn fx:id="selezionaColumn" text="✔" prefWidth="40" />
                     <TableColumn fx:id="titoloColumn" text="Titolo" prefWidth="110" />
@@ -69,7 +62,8 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Button text="Azione su selezionati" onAction="#onAzioneSelezionatiClick" />
+            <Button text="Modifica" onAction="#modificaSelezionato" />
+            <Button text="Rimuovi" onAction="#rimuoviSelezionati" />
         </HBox>
     </bottom>
 

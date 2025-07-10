@@ -49,6 +49,10 @@ public class GestoreLibreria implements Observable{
         libri.remove(libro);
         notifyObservers();
     }
+    public void rimuoviLibro(List<Libro> libro) {
+        libri.removeAll(libro);
+        notifyObservers();
+    }
 
     public List<Libro> getLibri() {
         return libri;
