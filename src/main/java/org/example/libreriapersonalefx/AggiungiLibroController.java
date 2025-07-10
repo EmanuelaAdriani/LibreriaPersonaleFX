@@ -4,62 +4,76 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class AggiungiLibroController {
 
-    // I tuoi TextField definiti nell'FXML
-    @FXML private TextField nomeTextField;
-    @FXML private TextField cognomeTextField;
-    @FXML private TextField indirizzoTextField;
-    @FXML private TextField telefonoTextField;
-    @FXML private TextField emailTextField;
+    @FXML private TextField titoloTextField;
+    @FXML private TextField autoreTextField;
+    @FXML private TextField isbnTextField;
+    @FXML private TextField genereTextField;
+    @FXML private ComboBox<Valutazione> valutazioneComboBox;
+    @FXML private ComboBox<Stato> statoComboBox;
 
-    // Campo per la callback
     private Runnable callback;
 
-    // Metodo per impostare la callback
     public void setCallback(Runnable callback) {
         this.callback = callback;
     }
 
     @FXML
-    private void handleConferma() {
-        // Simula una conferma (puoi aggiungere logica per il salvataggio dei dati)
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Conferma");
-        alert.setHeaderText(null);
-        alert.setContentText("Dati aggiunti correttamente!");
-        alert.showAndWait();
+    private void initialize() {
+        valutazioneComboBox.getItems().setAll(Valutazione.values());
+        statoComboBox.getItems().setAll(Stato.values());
+    }
 
-        // Ora torniamo al Main.fxml o Hello.fxml
+    @FXML
+    private void handleConferma() {
+        // Raccolta dati
+        String titolo = titoloTextField.getText();
+        String autore = autoreTextField.getText();
+        String isbn = isbnTextField.getText();
+        String genere = genereTextField.getText();
+        Valutazione valutazione = valutazioneComboBox.getValue();
+        Stato stato = statoComboBox.getValue();
+
+        GestoreLibreria.getInstance().aggiungiLibro(new Libro(titolo, autore, isbn, genere, valutazione, stato));
+        // Validazione minima
+        if (titolo.isEmpty() || autore.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Errore", "Titolo e Autore sono obbligatori.");
+            return;
+        }
+
+        Libro nuovoLibro = new Libro(titolo, autore, isbn, genere, valutazione, stato);
+        // Qui potresti salvare il libro in una lista o database
+
+        showAlert(Alert.AlertType.INFORMATION, "Conferma", "Libro aggiunto correttamente!");
+
+        if (callback != null) callback.run();
+
         tornaAllaPaginaPrincipale();
     }
 
-    // Metodo per tornare alla scena principale (Main.fxml o Hello.fxml)
     private void tornaAllaPaginaPrincipale() {
         try {
-            // Carica il file FXML principale (Main.fxml o Hello.fxml)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));  // Usa "Hello.fxml" se è quello che desideri
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
             Parent root = loader.load();
-
-            // Ottieni il nodo che ha generato l'evento (ad esempio, un bottone)
-            Stage stage = (Stage) nomeTextField.getScene().getWindow();
-
-            // Imposta la scena con il nuovo root caricato da FXML
+            Stage stage = (Stage) titoloTextField.getScene().getWindow();
             stage.setScene(new Scene(root));
-
-            // Mostra la nuova scena
             stage.show();
-
         } catch (IOException e) {
-            // Se c'è un errore nel caricamento del file FXML, stampa lo stack trace
             e.printStackTrace();
         }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

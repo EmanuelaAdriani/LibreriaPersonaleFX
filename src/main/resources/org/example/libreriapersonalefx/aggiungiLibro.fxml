@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.libreriapersonalefx.AggiungiLibroController">
-    <children>
-        <!-- VBox per disporre gli elementi in verticale -->
-        <VBox spacing="10" alignment="CENTER" prefWidth="600.0" prefHeight="400.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.libreriapersonalefx.AggiungiLibroController">
 
-            <!-- Ogni Label e TextField saranno in una riga separata -->
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="Nome" />
-                <TextField fx:id="nomeTextField" promptText="Inserisci il nome" />
-            </HBox>
+    <VBox spacing="12" alignment="CENTER" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Titolo" />
+            <TextField fx:id="titoloTextField" promptText="Inserisci il titolo" />
+        </HBox>
 
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="Cognome" />
-                <TextField fx:id="cognomeTextField" promptText="Inserisci il cognome" />
-            </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Autore" />
+            <TextField fx:id="autoreTextField" promptText="Inserisci l'autore" />
+        </HBox>
 
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="Indirizzo" />
-                <TextField fx:id="indirizzoTextField" promptText="Inserisci l'indirizzo" />
-            </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="ISBN" />
+            <TextField fx:id="isbnTextField" promptText="Inserisci l'ISBN" />
+        </HBox>
 
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="Telefono" />
-                <TextField fx:id="telefonoTextField" promptText="Inserisci il numero di telefono" />
-            </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Genere" />
+            <TextField fx:id="genereTextField" promptText="Inserisci il genere" />
+        </HBox>
 
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="Email" />
-                <TextField fx:id="emailTextField" promptText="Inserisci l'email" />
-            </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Valutazione" />
+            <ComboBox fx:id="valutazioneComboBox" prefWidth="200.0" />
+        </HBox>
 
-            <!-- Pulsante di conferma centrato -->
-            <Button text="Conferma" onAction="#handleConferma" maxWidth="200.0" />
-        </VBox>
-    </children>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Stato lettura" />
+            <ComboBox fx:id="statoComboBox" prefWidth="200.0" />
+        </HBox>
+
+        <Button text="Conferma" onAction="#handleConferma" maxWidth="200.0" />
+    </VBox>
 </AnchorPane>
