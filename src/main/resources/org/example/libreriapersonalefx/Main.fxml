@@ -62,9 +62,17 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Button text="Modifica" onAction="#modificaSelezionato" />
+            <Button  fx:id="modificaButton" text="Modifica" onAction="#modificaSelezionato" />
             <Button text="Rimuovi" onAction="#rimuoviSelezionati" />
         </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Filtro Genere:"/>
+        <ComboBox fx:id="filtroGenereComboBox" prefWidth="150"/>
+        <Label text="Filtro Stato:"/>
+        <ComboBox fx:id="filtroStatoComboBox" prefWidth="150"/>
+    </HBox>
     </bottom>
+
+
 
 </BorderPane>

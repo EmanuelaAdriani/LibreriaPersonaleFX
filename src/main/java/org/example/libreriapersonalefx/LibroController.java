@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AggiungiLibroController {
+public class LibroController {
 
     @FXML private TextField titoloTextField;
     @FXML private TextField autoreTextField;
@@ -28,6 +28,12 @@ public class AggiungiLibroController {
     private void initialize() {
         valutazioneComboBox.getItems().setAll(Valutazione.values());
         statoComboBox.getItems().setAll(Stato.values());
+        if(GestoreLibreria.getInstance().getLibroModifica()!=null) {
+            titoloTextField.setText(GestoreLibreria.getInstance().getLibroModifica().getTitolo());
+            autoreTextField.setText(GestoreLibreria.getInstance().getLibroModifica().getAutore());
+            isbnTextField.setText(GestoreLibreria.getInstance().getLibroModifica().getISBN());
+            genereTextField.setText(GestoreLibreria.getInstance().getLibroModifica().getGenere());
+        }
     }
 
     @FXML
@@ -39,15 +45,28 @@ public class AggiungiLibroController {
         String genere = genereTextField.getText();
         Valutazione valutazione = valutazioneComboBox.getValue();
         Stato stato = statoComboBox.getValue();
-
-        GestoreLibreria.getInstance().aggiungiLibro(new Libro(titolo, autore, isbn, genere, valutazione, stato));
+        if(GestoreLibreria.getInstance().getLibroModifica()!=null){
+            Libro l=GestoreLibreria.getInstance().getLibroModifica();
+            l.setTitolo(titolo);
+            l.setAutore(autore);
+            l.setISBN(isbn);
+            l.setGenere(genere);
+            l.setStatoLettura(stato);
+            l.setValutazionePersonale(valutazione);
+            GestoreLibreria.getInstance().notifyObservers();
+            GestoreLibreria.getInstance().setLibroModifica(null);
+            System.out.println(GestoreLibreria.getInstance().getLibri());
+        }
+        else {
+            GestoreLibreria.getInstance().aggiungiLibro(new Libro(titolo, autore, isbn, genere, valutazione, stato));
+        }
         // Validazione minima
         if (titolo.isEmpty() || autore.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Errore", "Titolo e Autore sono obbligatori.");
             return;
         }
 
-        Libro nuovoLibro = new Libro(titolo, autore, isbn, genere, valutazione, stato);
+
         // Qui potresti salvare il libro in una lista o database
 
         showAlert(Alert.AlertType.INFORMATION, "Conferma", "Libro aggiunto correttamente!");

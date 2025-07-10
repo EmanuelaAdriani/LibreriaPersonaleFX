@@ -6,7 +6,7 @@ import java.util.List;
 public class GestoreLibreria implements Observable{
 
     private static GestoreLibreria istanza = null;
-
+    private static Libro libroModifica=null;
     // Lista di libri
     private List<Libro> libri = new ArrayList<>();
 
@@ -56,6 +56,12 @@ public class GestoreLibreria implements Observable{
 
     public List<Libro> getLibri() {
         return libri;
+    }
+    public Libro getLibroModifica() {
+        return libroModifica;
+    }
+    public void setLibroModifica(Libro libroModifica) {
+        this.libroModifica = libroModifica;
     }
 
     // Altri metodi (rimuovi, modifica, ecc.) qui e chiamare notifyObservers() quando cambiano i dati

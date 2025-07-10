@@ -7,7 +7,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.libreriapersonalefx.AggiungiLibroController">
+            fx:controller="org.example.libreriapersonalefx.LibroController">
 
     <VBox spacing="12" alignment="CENTER" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <HBox spacing="10" alignment="CENTER_LEFT">
@@ -39,6 +39,7 @@
             <Label text="Stato lettura" />
             <ComboBox fx:id="statoComboBox" prefWidth="200.0" />
         </HBox>
+
 
         <Button text="Conferma" onAction="#handleConferma" maxWidth="200.0" />
     </VBox>
