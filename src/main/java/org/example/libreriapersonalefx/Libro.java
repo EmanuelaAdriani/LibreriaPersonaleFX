@@ -1,15 +1,24 @@
 package org.example.libreriapersonalefx;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import org.example.libreriapersonalefx.Stato;
 import org.example.libreriapersonalefx.Valutazione;
 
-public class Libro {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Libro implements Observable {
     private String titolo;
     private String autore;
     private String ISBN;
     private String genere;
     private Valutazione valutazionePersonale;
     private Stato statoLettura;
+
+    private BooleanProperty selezionato = new SimpleBooleanProperty(false);
+
+    private final List<Observer> observers = new ArrayList<>();
 
     public Libro(String titolo, String autore, String ISBN, String genere, Valutazione valutazione, Stato stato) {
         this.titolo = titolo;
@@ -26,4 +35,31 @@ public class Libro {
     public String getGenere() { return genere; }
     public Valutazione getValutazionePersonale() { return valutazionePersonale; }
     public Stato getStatoLettura() { return statoLettura; }
+
+    // Getter e setter per selezionato con notifica observer
+
+    public BooleanProperty selezionatoProperty() {
+        return selezionato;
+    }
+
+
+
+    @Override
+    public void addObserver(Observer o) {
+        if (!observers.contains(o)) {
+            observers.add(o);
+        }
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer o : observers) {
+            o.update();
+        }
+    }
 }

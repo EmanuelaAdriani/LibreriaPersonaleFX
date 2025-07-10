@@ -3,9 +3,15 @@ package org.example.libreriapersonalefx;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestoreLibreria {
+public class GestoreLibreria implements Observable{
+
     private static GestoreLibreria istanza = null;
+
+    // Lista di libri
     private List<Libro> libri = new ArrayList<>();
+
+    // Lista di observer (listener)
+    private List<Observer> observers = new ArrayList<>();
 
     private GestoreLibreria() {}
 
@@ -16,12 +22,37 @@ public class GestoreLibreria {
         return istanza;
     }
 
+    // Metodo per aggiungere observer
+
+    public void addObserver(Observer o) {
+        observers.add(o);
+    }
+
+    // Metodo per rimuovere observer
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    // Metodo per notificare observer
+    public void notifyObservers() {
+        for (Observer o : observers) {
+            o.update();
+        }
+    }
+
+    // Aggiungi libro e notifica cambiamento
     public void aggiungiLibro(Libro libro) {
         libri.add(libro);
+        notifyObservers();
     }
+    public void rimuoviLibro(Libro libro) {
+        libri.remove(libro);
+        notifyObservers();
+    }
+
     public List<Libro> getLibri() {
         return libri;
     }
 
-    // Altri metodi: rimuovi, modifica, cerca, salva, carica, ecc.
+    // Altri metodi (rimuovi, modifica, ecc.) qui e chiamare notifyObservers() quando cambiano i dati
 }

@@ -1,51 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.libreriapersonalefx.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.libreriapersonalefx.MainController"
+            prefWidth="700" prefHeight="400">
 
-    <MenuBar VBox.vgrow="NEVER">
-        <menus>
-            <Menu text="File">
-                <items>
-                    <MenuItem text="New" />
-                    <MenuItem text="Open…" />
-                    <SeparatorMenuItem />
-                    <MenuItem text="Save" />
-                    <MenuItem text="Save As…" />
-                    <SeparatorMenuItem />
-                    <MenuItem text="Quit" />
-                </items>
-            </Menu>
-            <Menu text="Edit">
-                <items>
-                    <MenuItem text="Cut" />
-                    <MenuItem text="Copy" />
-                    <MenuItem text="Paste" />
-                </items>
-            </Menu>
-            <Menu text="Help">
-                <items>
-                    <MenuItem text="About" />
-                </items>
-            </Menu>
-        </menus>
-    </MenuBar>
+    <top>
+        <MenuBar>
+            <menus>
+                <Menu text="File">
+                    <items>
+                        <MenuItem text="New" />
+                        <MenuItem text="Open…" />
+                        <SeparatorMenuItem />
+                        <MenuItem text="Save" />
+                        <MenuItem text="Save As…" />
+                        <SeparatorMenuItem />
+                        <MenuItem text="Quit" />
+                    </items>
+                </Menu>
+                <Menu text="Edit">
+                    <items>
+                        <MenuItem text="Cut" />
+                        <MenuItem text="Copy" />
+                        <MenuItem text="Paste" />
+                    </items>
+                </Menu>
+                <Menu text="Help">
+                    <items>
+                        <MenuItem text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
 
-    <AnchorPane VBox.vgrow="ALWAYS">
-        <children>
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
 
-            <!-- Pulsanti e campo di ricerca -->
-            <TextField layoutX="10.0" layoutY="10.0" promptText="Cerca..." />
-            <Button layoutX="200.0" layoutY="10.0" text="Search" />
-            <Button layoutX="280.0" layoutY="10.0" text="Inserisci" onAction="#onVaiAggiungiLibroClick" />
+            <HBox spacing="10">
+                <TextField fx:id="searchTextField" promptText="Cerca..." HBox.hgrow="ALWAYS" />
+                <Button text="Search" />
+                <Button text="Inserisci" onAction="#onVaiAggiungiLibroClick" />
+            </HBox>
 
-            <!-- TableView -->
-            <TableView fx:id="libriTableView" layoutX="10.0" layoutY="50.0" prefWidth="680.0" prefHeight="320.0">
+            <TableView fx:id="libriTableView" VBox.vgrow="ALWAYS">
                 <columns>
+                    <TableColumn fx:id="selezionaColumn" text="✔" prefWidth="40" />
                     <TableColumn fx:id="titoloColumn" text="Titolo" prefWidth="110" />
                     <TableColumn fx:id="autoreColumn" text="Autore" prefWidth="110" />
                     <TableColumn fx:id="isbnColumn" text="ISBN" prefWidth="110" />
@@ -54,10 +61,16 @@
                     <TableColumn fx:id="statoColumn" text="Stato" prefWidth="110" />
                 </columns>
             </TableView>
+        </VBox>
+    </center>
 
-        </children>
-    </AnchorPane>
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button text="Azione su selezionati" onAction="#onAzioneSelezionatiClick" />
+        </HBox>
+    </bottom>
 
-    <ButtonBar prefHeight="27.0" prefWidth="700.0" />
-
-</VBox>
+</BorderPane>
