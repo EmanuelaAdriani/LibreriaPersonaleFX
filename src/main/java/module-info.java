@@ -14,4 +14,6 @@ module org.example.libreriapersonalefx {
 
     opens org.example.libreriapersonalefx to javafx.fxml;
     exports org.example.libreriapersonalefx;
+    exports org.example.libreriapersonalefx.strategy;
+    opens org.example.libreriapersonalefx.strategy to javafx.fxml;
 }

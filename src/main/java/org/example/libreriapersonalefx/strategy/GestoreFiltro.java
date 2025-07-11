@@ -1,4 +1,6 @@
-package org.example.libreriapersonalefx;
+package org.example.libreriapersonalefx.strategy;
+
+import org.example.libreriapersonalefx.Libro;
 
 import java.util.ArrayList;
 import java.util.List;

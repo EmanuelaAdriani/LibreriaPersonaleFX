@@ -33,6 +33,8 @@ public class LibroController {
             autoreTextField.setText(GestoreLibreria.getInstance().getLibroModifica().getAutore());
             isbnTextField.setText(GestoreLibreria.getInstance().getLibroModifica().getISBN());
             genereTextField.setText(GestoreLibreria.getInstance().getLibroModifica().getGenere());
+            valutazioneComboBox.setValue(GestoreLibreria.getInstance().getLibroModifica().getValutazionePersonale());
+            statoComboBox.setValue(GestoreLibreria.getInstance().getLibroModifica().getStatoLettura());
         }
     }
 

@@ -37,6 +37,12 @@
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
 
+            <!-- Nuovo HBox con ComboBox tipoRicercaComboBox -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Tipo Ricerca:"/>
+                <ComboBox fx:id="tipoRicercaComboBox" prefWidth="150"/>
+            </HBox>
+
             <HBox spacing="10">
                 <TextField fx:id="searchTextField" promptText="Cerca..." HBox.hgrow="ALWAYS" />
                 <Button text="Search" />
@@ -58,21 +64,25 @@
     </center>
 
     <bottom>
-        <HBox alignment="CENTER_RIGHT" spacing="10">
+        <BorderPane>
+            <left>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Filtro Genere:"/>
+                    <ComboBox fx:id="filtroGenereComboBox" prefWidth="150"/>
+                    <Label text="Filtro Stato:"/>
+                    <ComboBox fx:id="filtroStatoComboBox" prefWidth="150"/>
+                </HBox>
+            </left>
+            <right>
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Button fx:id="modificaButton" text="Modifica" onAction="#modificaSelezionato" />
+                    <Button text="Rimuovi" onAction="#rimuoviSelezionati" />
+                </HBox>
+            </right>
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Button  fx:id="modificaButton" text="Modifica" onAction="#modificaSelezionato" />
-            <Button text="Rimuovi" onAction="#rimuoviSelezionati" />
-        </HBox>
-        <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Filtro Genere:"/>
-        <ComboBox fx:id="filtroGenereComboBox" prefWidth="150"/>
-        <Label text="Filtro Stato:"/>
-        <ComboBox fx:id="filtroStatoComboBox" prefWidth="150"/>
-    </HBox>
+        </BorderPane>
     </bottom>
-
-
 
 </BorderPane>

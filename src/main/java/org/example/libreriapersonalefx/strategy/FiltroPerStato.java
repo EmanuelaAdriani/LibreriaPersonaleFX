@@ -1,4 +1,7 @@
-package org.example.libreriapersonalefx;
+package org.example.libreriapersonalefx.strategy;
+
+import org.example.libreriapersonalefx.Libro;
+import org.example.libreriapersonalefx.Stato;
 
 public class FiltroPerStato implements FiltroLibroStrategy {
     private final Stato stato;

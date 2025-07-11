@@ -57,6 +57,7 @@ public class GestoreLibreria implements Observable{
     public List<Libro> getLibri() {
         return libri;
     }
+
     public Libro getLibroModifica() {
         return libroModifica;
     }
