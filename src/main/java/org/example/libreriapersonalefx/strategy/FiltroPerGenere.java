@@ -1,6 +1,6 @@
 package org.example.libreriapersonalefx.strategy;
 
-import org.example.libreriapersonalefx.Libro;
+import org.example.libreriapersonalefx.entity.Libro;
 
 public class FiltroPerGenere implements FiltroLibroStrategy {
     private final String genere;

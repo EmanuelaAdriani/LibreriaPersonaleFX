@@ -1,4 +1,4 @@
-package org.example.libreriapersonalefx;
+package org.example.libreriapersonalefx.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -6,6 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.example.libreriapersonalefx.singleton.GestoreLibreria;
+import org.example.libreriapersonalefx.entity.Libro;
+import org.example.libreriapersonalefx.entity.Stato;
+import org.example.libreriapersonalefx.entity.Valutazione;
 
 import java.io.IOException;
 
@@ -80,7 +84,7 @@ public class LibroController {
 
     private void tornaAllaPaginaPrincipale() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/libreriapersonalefx/Main.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) titoloTextField.getScene().getWindow();
             stage.setScene(new Scene(root));

@@ -1,7 +1,9 @@
-package org.example.libreriapersonalefx;
+package org.example.libreriapersonalefx.entity;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import org.example.libreriapersonalefx.observer.Observable;
+import org.example.libreriapersonalefx.observer.Observer;
 
 import java.util.ArrayList;
 import java.util.List;

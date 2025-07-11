@@ -10,10 +10,18 @@ module org.example.libreriapersonalefx {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
-    requires java.desktop;
+    requires com.fasterxml.jackson.databind;
 
     opens org.example.libreriapersonalefx to javafx.fxml;
     exports org.example.libreriapersonalefx;
     exports org.example.libreriapersonalefx.strategy;
     opens org.example.libreriapersonalefx.strategy to javafx.fxml;
+    exports org.example.libreriapersonalefx.controller;
+    opens org.example.libreriapersonalefx.controller to javafx.fxml;
+    exports org.example.libreriapersonalefx.observer;
+    opens org.example.libreriapersonalefx.observer to javafx.fxml;
+    exports org.example.libreriapersonalefx.singleton;
+    opens org.example.libreriapersonalefx.singleton to javafx.fxml;
+    exports org.example.libreriapersonalefx.entity;
+    opens org.example.libreriapersonalefx.entity to javafx.fxml;
 }

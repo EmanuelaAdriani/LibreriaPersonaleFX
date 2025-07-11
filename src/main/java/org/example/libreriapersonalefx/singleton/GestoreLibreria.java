@@ -1,9 +1,17 @@
-package org.example.libreriapersonalefx;
+package org.example.libreriapersonalefx.singleton;
 
+import org.example.libreriapersonalefx.LibroCSVUtil;
+import org.example.libreriapersonalefx.LibroJsonUtil;
+import org.example.libreriapersonalefx.entity.Libro;
+import org.example.libreriapersonalefx.observer.Observable;
+import org.example.libreriapersonalefx.observer.Observer;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestoreLibreria implements Observable{
+public class GestoreLibreria implements Observable {
 
     private static GestoreLibreria istanza = null;
     private static Libro libroModifica=null;
@@ -63,6 +71,44 @@ public class GestoreLibreria implements Observable{
     }
     public void setLibroModifica(Libro libroModifica) {
         this.libroModifica = libroModifica;
+    }
+    // Salva la lista libri su file CSV
+    public void salvaInCSV(File file) throws IOException {
+        LibroCSVUtil.salvaInCSV(libri, file);
+    }
+
+    // Carica la lista libri da file CSV (sovrascrive la lista attuale)
+    public void caricaDaCSV(File file) throws IOException {
+        List<Libro> caricati = LibroCSVUtil.caricaDaCSV(file);
+        libri.clear();
+        libri.addAll(caricati);
+        notifyObservers();
+    }
+
+    // Salva la lista libri su file JSON
+    public void salvaInJson(File file) throws IOException {
+        LibroJsonUtil.salvaInJson(libri, file);
+    }
+    public void reset() {
+        libri.clear();
+        notifyObservers();
+    }
+
+
+    // Carica la lista libri da file JSON (sovrascrive la lista attuale)
+    public void caricaDaJson(File file) throws IOException {
+        List<Libro> caricati = LibroJsonUtil.caricaDaJson(file);
+        libri.clear();
+        libri.addAll(caricati);
+        notifyObservers();
+    }
+
+    public void salvaCSV(File file) throws IOException {
+        LibroCSVUtil.salvaInCSV(libri, file);
+    }
+
+    public void salvaJson(File file) throws IOException {
+        LibroJsonUtil.salvaInJson(libri, file);
     }
 
     // Altri metodi (rimuovi, modifica, ecc.) qui e chiamare notifyObservers() quando cambiano i dati
