@@ -14,8 +14,8 @@
                 <Menu text="File">
                     <items>
                         <MenuItem text="Nuovo" onAction="#onNuovo"/>
-                        <MenuItem text="Apri..." onAction="#onApri"/>
                         <SeparatorMenuItem />
+                        <MenuItem text="Apri..." onAction="#onApri"/>
                         <MenuItem text="Salva" onAction="#onSalva"/>
                         <MenuItem text="Salva come" onAction="#onSalvaCome"/>
                         <SeparatorMenuItem />
@@ -46,7 +46,7 @@
             <HBox spacing="10">
                 <TextField fx:id="searchTextField" promptText="Cerca..." HBox.hgrow="ALWAYS" />
                 <Button text="Search" onAction="#onSearchClick"/>
-                <Button text="Inserisci" onAction="#onVaiAggiungiLibroClick" />
+                <Button text="Inserisci" onAction="#libroController" />
             </HBox>
 
             <TableView fx:id="libriTableView" VBox.vgrow="ALWAYS" editable="true">

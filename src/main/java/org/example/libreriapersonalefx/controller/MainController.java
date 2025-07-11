@@ -67,7 +67,7 @@ public class MainController implements Observer {
         searchTextField.textProperty().addListener((obs, oldV, newV) -> applicaFiltro());
 
         // Esempio libro iniziale
-        GestoreLibreria.getInstance().aggiungiLibro(new Libro("1984", "George Orwell", "1234567890", "Distopico", Valutazione.tre, Stato.inLettura));
+        //GestoreLibreria.getInstance().aggiungiLibro(new Libro("1984", "George Orwell", "1234567890", "Distopico", Valutazione.tre, Stato.inLettura));
 
         GestoreLibreria.getInstance().addObserver(this);
 
@@ -173,7 +173,7 @@ public class MainController implements Observer {
     }
 
     @FXML
-    public void onVaiAggiungiLibroClick(ActionEvent event) {
+    public void libroController(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/libreriapersonalefx/AggiungiLibro.fxml"));
             Parent root = loader.load();
@@ -206,7 +206,7 @@ public class MainController implements Observer {
                 break; // Modifica uno solo
             }
         }
-        onVaiAggiungiLibroClick(event);
+        libroController(event);
     }
 
     public void aggiornaVisibilita() {
@@ -216,7 +216,7 @@ public class MainController implements Observer {
         modificaButton.setVisible(selezionati == 1);
     }
 
-    // ---- MENU FILE ----
+
 
     @FXML
     public void onNuovo(ActionEvent event) {
@@ -310,8 +310,8 @@ public class MainController implements Observer {
     public void onAbout(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About");
-        alert.setHeaderText("Libreria Personale FX");
-        alert.setContentText("Applicazione di gestione libreria personale\nVersione 1.0");
+        alert.setHeaderText("Libreria Personale");
+        alert.setContentText("Applicazione di gestione libreria personale\n Realizzata da Emanuela Adriani");
         alert.showAndWait();
     }
 
@@ -323,15 +323,5 @@ public class MainController implements Observer {
         alert.showAndWait();
     }
 
-    public void onSalvaCSV(ActionEvent actionEvent) {
-    }
 
-    public void onSalvaJSON(ActionEvent actionEvent) {
-    }
-
-    public void onCaricaCSV(ActionEvent actionEvent) {
-    }
-
-    public void onCaricaJSON(ActionEvent actionEvent) {
-    }
 }

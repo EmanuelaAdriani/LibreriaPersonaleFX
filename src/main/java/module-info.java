@@ -24,4 +24,6 @@ module org.example.libreriapersonalefx {
     opens org.example.libreriapersonalefx.singleton to javafx.fxml;
     exports org.example.libreriapersonalefx.entity;
     opens org.example.libreriapersonalefx.entity to javafx.fxml;
+    exports org.example.libreriapersonalefx.util;
+    opens org.example.libreriapersonalefx.util to javafx.fxml;
 }

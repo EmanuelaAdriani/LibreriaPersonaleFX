@@ -1,7 +1,7 @@
 package org.example.libreriapersonalefx.singleton;
 
-import org.example.libreriapersonalefx.LibroCSVUtil;
-import org.example.libreriapersonalefx.LibroJsonUtil;
+import org.example.libreriapersonalefx.util.LibroCSVUtil;
+import org.example.libreriapersonalefx.util.LibroJsonUtil;
 import org.example.libreriapersonalefx.entity.Libro;
 import org.example.libreriapersonalefx.observer.Observable;
 import org.example.libreriapersonalefx.observer.Observer;
@@ -72,10 +72,7 @@ public class GestoreLibreria implements Observable {
     public void setLibroModifica(Libro libroModifica) {
         this.libroModifica = libroModifica;
     }
-    // Salva la lista libri su file CSV
-    public void salvaInCSV(File file) throws IOException {
-        LibroCSVUtil.salvaInCSV(libri, file);
-    }
+
 
     // Carica la lista libri da file CSV (sovrascrive la lista attuale)
     public void caricaDaCSV(File file) throws IOException {
@@ -85,10 +82,7 @@ public class GestoreLibreria implements Observable {
         notifyObservers();
     }
 
-    // Salva la lista libri su file JSON
-    public void salvaInJson(File file) throws IOException {
-        LibroJsonUtil.salvaInJson(libri, file);
-    }
+
     public void reset() {
         libri.clear();
         notifyObservers();
