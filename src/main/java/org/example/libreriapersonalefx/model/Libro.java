@@ -1,5 +1,6 @@
 package org.example.libreriapersonalefx.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import org.example.libreriapersonalefx.observer.Observable;
@@ -16,7 +17,7 @@ public class Libro implements Observable {
     private String genere;
     private Valutazione valutazionePersonale;
     private Stato statoLettura;
-
+    @JsonIgnore
     private final BooleanProperty selezionato = new SimpleBooleanProperty(false);
     private final List<Observer> observers = new ArrayList<>();
 
@@ -31,7 +32,7 @@ public class Libro implements Observable {
         // Se cambia la proprietà, notifica gli observer
         selezionato.addListener((obs, oldVal, newVal) -> notifyObservers());
     }
-
+    public Libro() {}
     // Getter standard
     public String getTitolo() { return titolo; }
     public String getAutore() { return autore; }
