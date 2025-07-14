@@ -1,7 +1,7 @@
 package org.example.libreriapersonalefx.strategy;
 
-import org.example.libreriapersonalefx.entity.Libro;
-import org.example.libreriapersonalefx.entity.Stato;
+import org.example.libreriapersonalefx.model.Libro;
+import org.example.libreriapersonalefx.model.Stato;
 
 public class FiltroPerStato implements FiltroLibroStrategy {
     private final Stato stato;

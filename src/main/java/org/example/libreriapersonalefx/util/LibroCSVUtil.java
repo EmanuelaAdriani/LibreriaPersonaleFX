@@ -2,9 +2,9 @@ package org.example.libreriapersonalefx.util;
 
 import java.io.*;
 import java.util.*;
-import org.example.libreriapersonalefx.entity.Libro;
-import org.example.libreriapersonalefx.entity.Valutazione;
-import org.example.libreriapersonalefx.entity.Stato;
+import org.example.libreriapersonalefx.model.Libro;
+import org.example.libreriapersonalefx.model.Valutazione;
+import org.example.libreriapersonalefx.model.Stato;
 
 public class LibroCSVUtil {
 

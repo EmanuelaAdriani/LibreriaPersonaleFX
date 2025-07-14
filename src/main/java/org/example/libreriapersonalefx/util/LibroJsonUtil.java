@@ -2,7 +2,7 @@ package org.example.libreriapersonalefx.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.example.libreriapersonalefx.entity.Libro;
+import org.example.libreriapersonalefx.model.Libro;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package org.example.libreriapersonalefx.entity;
+package org.example.libreriapersonalefx.model;
 
 public enum Valutazione {
     uno, due, tre, quattro, cinque;

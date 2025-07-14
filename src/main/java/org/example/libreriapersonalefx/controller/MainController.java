@@ -11,11 +11,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.example.libreriapersonalefx.entity.Libro;
-import org.example.libreriapersonalefx.entity.Stato;
-import org.example.libreriapersonalefx.entity.Valutazione;
+import org.example.libreriapersonalefx.command.*;
+import org.example.libreriapersonalefx.model.Libro;
+import org.example.libreriapersonalefx.model.Stato;
+import org.example.libreriapersonalefx.model.Valutazione;
 import org.example.libreriapersonalefx.observer.Observer;
 import org.example.libreriapersonalefx.singleton.GestoreLibreria;
 import org.example.libreriapersonalefx.strategy.*;
@@ -41,9 +41,19 @@ public class MainController implements Observer {
     @FXML private TextField searchTextField;
     @FXML private ComboBox<String> tipoRicercaComboBox;
 
-    private GestoreFiltro gestoreFiltro = new GestoreFiltro();
+    private FiltroLibroManager filtroLibroManager;
 
     private File lastUsedFile = null;  // Per Save/Save As
+
+    public TableView getLibriTableView() {
+        return libriTableView;
+    }
+    public File getLastUsedFile() {
+        return lastUsedFile;
+    }
+    public void setLastUsedFile(File lastUsedFile) {
+        this.lastUsedFile = lastUsedFile;
+    }
 
     @FXML
     public void initialize() {
@@ -68,109 +78,35 @@ public class MainController implements Observer {
 
         // Esempio libro iniziale
         //GestoreLibreria.getInstance().aggiungiLibro(new Libro("1984", "George Orwell", "1234567890", "Distopico", Valutazione.tre, Stato.inLettura));
-
+        filtroLibroManager = new FiltroLibroManager(filtroGenereComboBox, filtroStatoComboBox, searchTextField, tipoRicercaComboBox);
         GestoreLibreria.getInstance().addObserver(this);
 
         update();
     }
 
     @FXML
-    public void onSearchClick(ActionEvent event) {
-        applicaFiltro();
-    }
-
     private void applicaFiltro() {
         List<Libro> tuttiLibri = GestoreLibreria.getInstance().getLibri();
-        List<FiltroLibroStrategy> filtri = new ArrayList<>();
 
-        String genereSelezionato = filtroGenereComboBox.getValue();
-        if (genereSelezionato != null && !genereSelezionato.equals("Tutti")) {
-            filtri.add(new FiltroPerGenere(genereSelezionato));
-        }
+        // Applica il filtro tramite il FiltroLibroManager
+        List<Libro> libriFiltrati = filtroLibroManager.applicaFiltri(tuttiLibri);
 
-        Stato statoSelezionato = filtroStatoComboBox.getValue();
-        if (statoSelezionato != null) {
-            filtri.add(new FiltroPerStato(statoSelezionato));
-        }
-
-        String testoRicerca = searchTextField.getText();
-        String tipoRicerca = tipoRicercaComboBox.getValue();
-
-        if (testoRicerca != null && !testoRicerca.trim().isEmpty()) {
-            if ("Titolo".equals(tipoRicerca)) {
-                filtri.add(new FiltroPerTitolo(testoRicerca));
-            } else if ("Autore".equals(tipoRicerca)) {
-                filtri.add(new FiltroPerAutore(testoRicerca));
-            }
-        }
-
-        gestoreFiltro.setStrategie(filtri);
-        List<Libro> filtrati = gestoreFiltro.filtra(tuttiLibri);
-
-        libriTableView.getItems().setAll(filtrati);
+        // Aggiorna la TableView con i libri filtrati
+        libriTableView.getItems().setAll(libriFiltrati);
         aggiornaVisibilita();
     }
 
     @Override
     public void update() {
-        javafx.application.Platform.runLater(() -> {
-            aggiornaFiltriDisponibili();
-            applicaFiltro();
-
-            for (Libro libro : libriTableView.getItems()) {
-                libro.selezionatoProperty().addListener((obs, oldVal, newVal) -> aggiornaVisibilita());
-            }
-
-            aggiornaVisibilita();
-        });
-    }
-
-    private void aggiornaFiltriDisponibili() {
+        // Qui potresti avere un callback per aggiornare i filtri disponibili
         List<Libro> tuttiLibri = GestoreLibreria.getInstance().getLibri();
+        filtroLibroManager.aggiornaFiltriDisponibili(tuttiLibri);
+        applicaFiltro(); // Applica i filtri alla lista di libri
 
-        Set<String> generi = tuttiLibri.stream()
-                .map(Libro::getGenere)
-                .filter(g -> g != null && !g.isEmpty())
-                .collect(Collectors.toCollection(TreeSet::new));
-
-        Set<Stato> stati = tuttiLibri.stream()
-                .map(Libro::getStatoLettura)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Enum::name))));
-
-        String genereSelezionato = filtroGenereComboBox.getValue();
-        Stato statoSelezionato = filtroStatoComboBox.getValue();
-
-        filtroGenereComboBox.getItems().clear();
-        filtroGenereComboBox.getItems().add("Tutti");
-        filtroGenereComboBox.getItems().addAll(generi);
-        filtroGenereComboBox.setValue(
-                genereSelezionato != null && generi.contains(genereSelezionato) ? genereSelezionato : "Tutti"
-        );
-
-        filtroStatoComboBox.getItems().clear();
-        filtroStatoComboBox.getItems().add(null); // null = Tutti
-        filtroStatoComboBox.getItems().addAll(stati);
-
-        filtroStatoComboBox.setCellFactory(lv -> new ListCell<>() {
-            @Override
-            protected void updateItem(Stato stato, boolean empty) {
-                super.updateItem(stato, empty);
-                setText(empty ? "" : (stato == null ? "Tutti" : stato.toString()));
-            }
-        });
-        filtroStatoComboBox.setButtonCell(new ListCell<>() {
-            @Override
-            protected void updateItem(Stato stato, boolean empty) {
-                super.updateItem(stato, empty);
-                setText(empty || stato == null ? "Tutti" : stato.toString());
-            }
-        });
-
-        filtroStatoComboBox.setValue(
-                statoSelezionato != null && stati.contains(statoSelezionato) ? statoSelezionato : null
-        );
+        // Altri aggiornamenti se necessari
+        aggiornaVisibilita();
     }
+
 
     @FXML
     public void libroController(ActionEvent event) {
@@ -220,108 +156,38 @@ public class MainController implements Observer {
 
     @FXML
     public void onNuovo(ActionEvent event) {
-        GestoreLibreria.getInstance().reset(); // Assicurati che reset() svuoti la lista libri
-        update();
-        lastUsedFile = null;
+       new NuovoCommand(this).esegui();
     }
 
 
     @FXML
     public void onApri(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Apri file");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("CSV files", "*.csv"),
-                new FileChooser.ExtensionFilter("JSON files", "*.json")
-        );
-        Stage stage = (Stage) libriTableView.getScene().getWindow();
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            String name = file.getName().toLowerCase();
-            try {
-                if (name.endsWith(".csv")) {
-                    GestoreLibreria.getInstance().caricaDaCSV(file);
-                } else if (name.endsWith(".json")) {
-                    GestoreLibreria.getInstance().caricaDaJson(file);
-                } else {
-                    mostraErrore("Formato file non supportato");
-                    return;
-                }
-                lastUsedFile = file;
-                update();
-            } catch (IOException e) {
-                mostraErrore("Errore caricamento file: " + e.getMessage());
-            }
-        }
+         new ApriFileCommand(this).esegui();
     }
 
     @FXML
     public void onSalva(ActionEvent event) {
-        if (lastUsedFile == null) {
-            onSalvaCome(event);
-            return;
-        }
-        try {
-            salvaInFile(lastUsedFile);
-        } catch (IOException e) {
-            mostraErrore("Errore salvataggio: " + e.getMessage());
-        }
+       new SalvaFileCommand(this).esegui();
     }
 
     @FXML
     public void onSalvaCome(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Salva file");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("CSV files", "*.csv"),
-                new FileChooser.ExtensionFilter("JSON files", "*.json")
-        );
-        Stage stage = (Stage) libriTableView.getScene().getWindow();
-        File file = fileChooser.showSaveDialog(stage);
-        if (file != null) {
-            try {
-                salvaInFile(file);
-                lastUsedFile = file;
-            } catch (IOException e) {
-                mostraErrore("Errore salvataggio: " + e.getMessage());
-            }
-        }
+       new SalvaComeFileCommand(this).esegui();
     }
 
-    private void salvaInFile(File file) throws IOException {
-        String name = file.getName().toLowerCase();
-        if (name.endsWith(".csv")) {
-            GestoreLibreria.getInstance().salvaCSV(file);
-        } else if (name.endsWith(".json")) {
-            GestoreLibreria.getInstance().salvaJson(file);
-        } else {
-            throw new IOException("Formato file non supportato per il salvataggio.");
-        }
-        update();
-    }
+
 
     @FXML
     public void onEsci(ActionEvent event) {
-        Stage stage = (Stage) libriTableView.getScene().getWindow();
-        stage.close();
+      new EsciCommand(this).esegui();
     }
 
     @FXML
     public void onAbout(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("About");
-        alert.setHeaderText("Libreria Personale");
-        alert.setContentText("Applicazione di gestione libreria personale\n Realizzata da Emanuela Adriani");
-        alert.showAndWait();
+        new OnAboutCommand().esegui();
     }
 
-    private void mostraErrore(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Errore");
-        alert.setHeaderText("Errore");
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
+
 
 
 }

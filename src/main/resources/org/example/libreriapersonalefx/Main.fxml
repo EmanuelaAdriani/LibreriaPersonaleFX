@@ -45,7 +45,6 @@
 
             <HBox spacing="10">
                 <TextField fx:id="searchTextField" promptText="Cerca..." HBox.hgrow="ALWAYS" />
-                <Button text="Search" onAction="#onSearchClick"/>
                 <Button text="Inserisci" onAction="#libroController" />
             </HBox>
 

@@ -7,9 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.libreriapersonalefx.singleton.GestoreLibreria;
-import org.example.libreriapersonalefx.entity.Libro;
-import org.example.libreriapersonalefx.entity.Stato;
-import org.example.libreriapersonalefx.entity.Valutazione;
+import org.example.libreriapersonalefx.model.Libro;
+import org.example.libreriapersonalefx.model.Stato;
+import org.example.libreriapersonalefx.model.Valutazione;
 
 import java.io.IOException;
 
@@ -63,7 +63,13 @@ public class LibroController {
             GestoreLibreria.getInstance().setLibroModifica(null);
             System.out.println(GestoreLibreria.getInstance().getLibri());
         }
+        else if(GestoreLibreria.getInstance().isISBNIn(isbn)){
+
+            showAlert(Alert.AlertType.ERROR, "Errore", "Il libro è già presente");
+            return;
+        }
         else {
+
             GestoreLibreria.getInstance().aggiungiLibro(new Libro(titolo, autore, isbn, genere, valutazione, stato));
         }
         // Validazione minima
@@ -81,7 +87,7 @@ public class LibroController {
 
         tornaAllaPaginaPrincipale();
     }
-
+    @FXML
     private void tornaAllaPaginaPrincipale() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/libreriapersonalefx/Main.fxml"));
