@@ -11,6 +11,6 @@ public class NuovoCommand implements Command {
     public void esegui(){
         GestoreLibreria.getInstance().reset(); // Assicurati che reset() svuoti la lista libri
         mainController.update();
-        mainController.setLastUsedFile(null);
+        GestoreLibreria.getInstance().setLastUsedFile(null);
     }
 }

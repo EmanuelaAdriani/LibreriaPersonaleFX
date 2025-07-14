@@ -18,12 +18,9 @@ import org.example.libreriapersonalefx.model.Stato;
 import org.example.libreriapersonalefx.model.Valutazione;
 import org.example.libreriapersonalefx.observer.Observer;
 import org.example.libreriapersonalefx.singleton.GestoreLibreria;
-import org.example.libreriapersonalefx.strategy.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MainController implements Observer {
 
@@ -43,16 +40,10 @@ public class MainController implements Observer {
 
     private FiltroLibroManager filtroLibroManager;
 
-    private File lastUsedFile = null;  // Per Save/Save As
+
 
     public TableView getLibriTableView() {
         return libriTableView;
-    }
-    public File getLastUsedFile() {
-        return lastUsedFile;
-    }
-    public void setLastUsedFile(File lastUsedFile) {
-        this.lastUsedFile = lastUsedFile;
     }
 
     @FXML
@@ -76,8 +67,7 @@ public class MainController implements Observer {
 
         searchTextField.textProperty().addListener((obs, oldV, newV) -> applicaFiltro());
 
-        // Esempio libro iniziale
-        //GestoreLibreria.getInstance().aggiungiLibro(new Libro("1984", "George Orwell", "1234567890", "Distopico", Valutazione.tre, Stato.inLettura));
+
         filtroLibroManager = new FiltroLibroManager(filtroGenereComboBox, filtroStatoComboBox, searchTextField, tipoRicercaComboBox);
         GestoreLibreria.getInstance().addObserver(this);
 

@@ -39,7 +39,7 @@ public class ApriFileCommand implements Command {
                     mostraErrore("Formato file non supportato");
                     return;
                 }
-                mainController.setLastUsedFile(file);
+                GestoreLibreria.getInstance().setLastUsedFile(file);
                 mainController.update();
             } catch (IOException e) {
                 mostraErrore("Errore caricamento file: " + e.getMessage());

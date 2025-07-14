@@ -14,12 +14,12 @@ public class SalvaFileCommand implements Command {
         this.mainController = mainController;
     }
     public void esegui() {
-        if (mainController.getLastUsedFile() == null) {
+        if (GestoreLibreria.getInstance().getLastUsedFile() == null) {
             new SalvaComeFileCommand(mainController).esegui();
             return;
         }
         try {
-            salvaInFile(mainController.getLastUsedFile());
+            salvaInFile(GestoreLibreria.getInstance().getLastUsedFile());
         } catch (IOException e) {
             mostraErrore("Errore salvataggio: " + e.getMessage());
         }

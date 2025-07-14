@@ -17,11 +17,18 @@ public class GestoreLibreria implements Observable {
     private static Libro libroModifica=null;
     // Lista di libri
     private List<Libro> libri = new ArrayList<>();
-
+    private File lastUsedFile = null;  // Per Save/Save As
     // Lista di observer (listener)
     private List<Observer> observers = new ArrayList<>();
 
     private GestoreLibreria() {}
+
+    public File getLastUsedFile() {
+        return lastUsedFile;
+    }
+    public void setLastUsedFile(File lastUsedFile) {
+        this.lastUsedFile = lastUsedFile;
+    }
 
     public static GestoreLibreria getInstance() {
         if (istanza == null) {
@@ -36,10 +43,6 @@ public class GestoreLibreria implements Observable {
         observers.add(o);
     }
 
-    // Metodo per rimuovere observer
-    public void removeObserver(Observer o) {
-        observers.remove(o);
-    }
 
     // Metodo per notificare observer
     public void notifyObservers() {
@@ -53,10 +56,7 @@ public class GestoreLibreria implements Observable {
         libri.add(libro);
         notifyObservers();
     }
-    public void rimuoviLibro(Libro libro) {
-        libri.remove(libro);
-        notifyObservers();
-    }
+
     public void rimuoviLibro(List<Libro> libro) {
         libri.removeAll(libro);
         notifyObservers();
