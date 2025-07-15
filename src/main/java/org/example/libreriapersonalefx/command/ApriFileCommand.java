@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class ApriFileCommand implements Command {
 
-    MainController mainController;
+    private MainController mainController;
 
     public ApriFileCommand(MainController mainController) {
         this.mainController = mainController;

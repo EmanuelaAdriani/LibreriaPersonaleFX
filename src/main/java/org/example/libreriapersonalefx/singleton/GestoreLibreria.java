@@ -63,7 +63,7 @@ public class GestoreLibreria  {
 
     public boolean isISBNIn(String isbn) {
         for (Libro libro : libri) {
-            if (libro.getISBN().equals(isbn)) {
+            if (isbn.equals(libro.getISBN())) {
                 return true;
             }
         }
