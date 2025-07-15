@@ -61,7 +61,6 @@ public class FiltroLibroManager {
 
     public void aggiornaFiltriDisponibili(List<Libro> tuttiLibri) {
         if (tuttiLibri == null || tuttiLibri.isEmpty()) {
-            System.out.println("La lista dei libri è vuota o null");
             return; // Non procedere se la lista è nulla o vuota
         }
 

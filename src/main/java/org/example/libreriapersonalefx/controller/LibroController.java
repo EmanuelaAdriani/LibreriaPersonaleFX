@@ -68,6 +68,7 @@ public class LibroController {
         }
         else {
             GestoreLibreria.getInstance().aggiungiLibro(new Libro(titolo, autore, isbn, genere, valutazione, stato));
+            GestoreLibreria.getInstance().setModified(true);
         }
         // Validazione minima
         if (isbn.isEmpty()||titolo.isEmpty() || autore.isEmpty()) {
@@ -78,7 +79,7 @@ public class LibroController {
 
         // Qui potresti salvare il libro in una lista o database
 
-        showAlert(Alert.AlertType.INFORMATION, "Conferma", "Libro aggiunto correttamente!");
+        showAlert(Alert.AlertType.INFORMATION, "Conferma", "Operazione avvenuta con successo!");
 
         if (callback != null) callback.run();
 

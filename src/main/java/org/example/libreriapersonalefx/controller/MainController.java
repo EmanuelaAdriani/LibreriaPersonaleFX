@@ -67,6 +67,7 @@ public class MainController {
 
         filtroLibroManager = new FiltroLibroManager(filtroGenereComboBox, filtroStatoComboBox, searchTextField, tipoRicercaComboBox);
 
+
         aggiornaDati(); // inizializza la tabella con i dati
     }
 
@@ -74,6 +75,7 @@ public class MainController {
         List<Libro> tuttiLibri = GestoreLibreria.getInstance().getLibri();
         filtroLibroManager.aggiornaFiltriDisponibili(tuttiLibri);
         applicaFiltro();
+
     }
 
     @FXML

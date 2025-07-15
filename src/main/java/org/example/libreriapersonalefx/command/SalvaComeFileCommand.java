@@ -32,6 +32,7 @@ public class SalvaComeFileCommand implements Command {
             try {
                 salvaInFile(file);
                GestoreLibreria.getInstance().setLastUsedFile(file);
+               GestoreLibreria.getInstance().setModified(false);
             } catch (IOException e) {
                 mostraErrore("Errore salvataggio: " + e.getMessage());
             }

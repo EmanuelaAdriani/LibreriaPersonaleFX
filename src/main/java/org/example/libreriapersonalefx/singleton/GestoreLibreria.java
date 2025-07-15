@@ -17,7 +17,7 @@ public class GestoreLibreria  {
     // Lista di libri
     private List<Libro> libri = new ArrayList<>();
     private File lastUsedFile = null;  // Per Save/Save As
-
+    private boolean isModified = false;
     private GestoreLibreria() {}
 
     public File getLastUsedFile() {
@@ -32,6 +32,12 @@ public class GestoreLibreria  {
             istanza = new GestoreLibreria();
         }
         return istanza;
+    }
+    public void setModified(boolean state) {
+        isModified = state;
+    }
+    public boolean isModified() {
+        return isModified;
     }
 
 
