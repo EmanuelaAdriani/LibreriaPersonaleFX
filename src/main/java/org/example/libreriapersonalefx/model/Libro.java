@@ -24,7 +24,6 @@ public class Libro  {
         this.valutazionePersonale = valutazione;
         this.statoLettura = stato;
 
-
     }
     public Libro() {}
     // Getter standard

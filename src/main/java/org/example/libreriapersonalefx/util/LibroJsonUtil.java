@@ -10,7 +10,6 @@ import java.util.List;
 
 public class LibroJsonUtil {
 
-
     private static final ObjectMapper mapper = new ObjectMapper()
             .enable(SerializationFeature.INDENT_OUTPUT);
 
