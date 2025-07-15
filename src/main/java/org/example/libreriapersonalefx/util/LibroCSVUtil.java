@@ -38,7 +38,7 @@ public class LibroCSVUtil {
 
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-                // parts[0] titolo, parts[1] autore, parts[2] ISBN, parts[3] genere, parts[4] valutazione, parts[5] stato
+
 
                 Libro libro = new Libro(
                         unescapeCsv(parts[0]),

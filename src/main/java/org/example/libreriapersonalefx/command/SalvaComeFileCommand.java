@@ -46,6 +46,6 @@ public class SalvaComeFileCommand implements Command {
         } else {
             throw new IOException("Formato file non supportato per il salvataggio.");
         }
-        mainController.update();
+        mainController.aggiornaDati();
     }
 }

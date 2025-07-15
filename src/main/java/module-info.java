@@ -18,8 +18,6 @@ module org.example.libreriapersonalefx {
     opens org.example.libreriapersonalefx.strategy to javafx.fxml;
     exports org.example.libreriapersonalefx.controller;
     opens org.example.libreriapersonalefx.controller to javafx.fxml;
-    exports org.example.libreriapersonalefx.observer;
-    opens org.example.libreriapersonalefx.observer to javafx.fxml;
     exports org.example.libreriapersonalefx.singleton;
     opens org.example.libreriapersonalefx.singleton to javafx.fxml;
     exports org.example.libreriapersonalefx.model;

@@ -10,7 +10,7 @@ public class NuovoCommand implements Command {
     }
     public void esegui(){
         GestoreLibreria.getInstance().reset(); // Assicurati che reset() svuoti la lista libri
-        mainController.update();
+        mainController.aggiornaDati();
         GestoreLibreria.getInstance().setLastUsedFile(null);
     }
 }

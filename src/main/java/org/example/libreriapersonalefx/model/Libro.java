@@ -3,14 +3,9 @@ package org.example.libreriapersonalefx.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import org.example.libreriapersonalefx.observer.Observable;
-import org.example.libreriapersonalefx.observer.Observer;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-public class Libro implements Observable {
+public class Libro  {
     private String titolo;
     private String autore;
     private String ISBN;
@@ -19,7 +14,7 @@ public class Libro implements Observable {
     private Stato statoLettura;
     @JsonIgnore
     private final BooleanProperty selezionato = new SimpleBooleanProperty(false);
-    private final List<Observer> observers = new ArrayList<>();
+
 
     public Libro(String titolo, String autore, String ISBN, String genere, Valutazione valutazione, Stato stato) {
         this.titolo = titolo;
@@ -29,8 +24,7 @@ public class Libro implements Observable {
         this.valutazionePersonale = valutazione;
         this.statoLettura = stato;
 
-        // Se cambia la proprietà, notifica gli observer
-        selezionato.addListener((obs, oldVal, newVal) -> notifyObservers());
+
     }
     public Libro() {}
     // Getter standard
@@ -69,20 +63,7 @@ public class Libro implements Observable {
         return selezionato;
     }
 
-    // Observer pattern
-    @Override
-    public void addObserver(Observer o) {
-        if (!observers.contains(o)) {
-            observers.add(o);
-        }
-    }
 
-    @Override
-    public void notifyObservers() {
-        for (Observer o : observers) {
-            o.update();
-        }
-    }
 
     @Override
     public String toString() {
@@ -94,7 +75,6 @@ public class Libro implements Observable {
                 ", valutazionePersonale=" + valutazionePersonale +
                 ", statoLettura=" + statoLettura +
                 ", selezionato=" + selezionato +
-                ", observers=" + observers +
                 '}';
     }
 
@@ -102,11 +82,11 @@ public class Libro implements Observable {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Libro libro = (Libro) o;
-        return Objects.equals(titolo, libro.titolo) && Objects.equals(autore, libro.autore) && Objects.equals(ISBN, libro.ISBN) && Objects.equals(genere, libro.genere) && valutazionePersonale == libro.valutazionePersonale && statoLettura == libro.statoLettura && Objects.equals(selezionato, libro.selezionato) && Objects.equals(observers, libro.observers);
+        return Objects.equals(titolo, libro.titolo) && Objects.equals(autore, libro.autore) && Objects.equals(ISBN, libro.ISBN) && Objects.equals(genere, libro.genere) && valutazionePersonale == libro.valutazionePersonale && statoLettura == libro.statoLettura && Objects.equals(selezionato, libro.selezionato) ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(titolo, autore, ISBN, genere, valutazionePersonale, statoLettura, selezionato, observers);
+        return Objects.hash(titolo, autore, ISBN, genere, valutazionePersonale, statoLettura, selezionato);
     }
 }

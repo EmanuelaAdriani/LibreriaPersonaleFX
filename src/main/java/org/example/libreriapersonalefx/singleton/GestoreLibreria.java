@@ -3,23 +3,20 @@ package org.example.libreriapersonalefx.singleton;
 import org.example.libreriapersonalefx.util.LibroCSVUtil;
 import org.example.libreriapersonalefx.util.LibroJsonUtil;
 import org.example.libreriapersonalefx.model.Libro;
-import org.example.libreriapersonalefx.observer.Observable;
-import org.example.libreriapersonalefx.observer.Observer;
+
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestoreLibreria implements Observable {
+public class GestoreLibreria  {
 
     private static GestoreLibreria istanza = null;
     private static Libro libroModifica=null;
     // Lista di libri
     private List<Libro> libri = new ArrayList<>();
     private File lastUsedFile = null;  // Per Save/Save As
-    // Lista di observer (listener)
-    private List<Observer> observers = new ArrayList<>();
 
     private GestoreLibreria() {}
 
@@ -37,33 +34,20 @@ public class GestoreLibreria implements Observable {
         return istanza;
     }
 
-    // Metodo per aggiungere observer
-
-    public void addObserver(Observer o) {
-        observers.add(o);
-    }
-
-
-    // Metodo per notificare observer
-    public void notifyObservers() {
-        for (Observer o : observers) {
-            o.update();
-        }
-    }
 
     // Aggiungi libro e notifica cambiamento
     public void aggiungiLibro(Libro libro) {
         libri.add(libro);
-        notifyObservers();
+
     }
 
     public void rimuoviLibro(List<Libro> libro) {
         libri.removeAll(libro);
-        notifyObservers();
+
     }
     public void rimuoviLibro(Libro libro) {
         libri.remove(libro);
-        notifyObservers();
+
     }
 
     public List<Libro> getLibri() {
@@ -90,12 +74,12 @@ public class GestoreLibreria implements Observable {
         List<Libro> caricati = LibroCSVUtil.caricaDaCSV(file);
         libri.clear();
         libri.addAll(caricati);
-        notifyObservers();
+
     }
 
     public void reset() {
         libri.clear();
-        notifyObservers();
+
     }
 
     // Carica la lista libri da file JSON (sovrascrive la lista attuale)
@@ -103,7 +87,7 @@ public class GestoreLibreria implements Observable {
         List<Libro> caricati = LibroJsonUtil.caricaDaJson(file);
         libri.clear();
         libri.addAll(caricati);
-        notifyObservers();
+
     }
 
     public void salvaCSV(File file) throws IOException {

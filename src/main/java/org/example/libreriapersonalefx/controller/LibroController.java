@@ -59,9 +59,7 @@ public class LibroController {
             l.setGenere(genere);
             l.setStatoLettura(stato);
             l.setValutazionePersonale(valutazione);
-            GestoreLibreria.getInstance().notifyObservers();
             GestoreLibreria.getInstance().setLibroModifica(null);
-            System.out.println(GestoreLibreria.getInstance().getLibri());
         }
         else if(GestoreLibreria.getInstance().isISBNIn(isbn)){
 
@@ -69,12 +67,11 @@ public class LibroController {
             return;
         }
         else {
-
             GestoreLibreria.getInstance().aggiungiLibro(new Libro(titolo, autore, isbn, genere, valutazione, stato));
         }
         // Validazione minima
-        if (titolo.isEmpty() || autore.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Errore", "Titolo e Autore sono obbligatori.");
+        if (isbn.isEmpty()||titolo.isEmpty() || autore.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Errore", "ISBN,Titolo e Autore sono obbligatori.");
             return;
         }
 

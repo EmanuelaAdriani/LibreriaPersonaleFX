@@ -16,13 +16,13 @@ import org.example.libreriapersonalefx.command.*;
 import org.example.libreriapersonalefx.model.Libro;
 import org.example.libreriapersonalefx.model.Stato;
 import org.example.libreriapersonalefx.model.Valutazione;
-import org.example.libreriapersonalefx.observer.Observer;
 import org.example.libreriapersonalefx.singleton.GestoreLibreria;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainController implements Observer {
+public class MainController {
 
     @FXML private TableView<Libro> libriTableView;
     @FXML private TableColumn<Libro, String> titoloColumn;
@@ -40,9 +40,7 @@ public class MainController implements Observer {
 
     private FiltroLibroManager filtroLibroManager;
 
-
-
-    public TableView getLibriTableView() {
+    public TableView<Libro> getLibriTableView() {
         return libriTableView;
     }
 
@@ -67,36 +65,30 @@ public class MainController implements Observer {
 
         searchTextField.textProperty().addListener((obs, oldV, newV) -> applicaFiltro());
 
-
         filtroLibroManager = new FiltroLibroManager(filtroGenereComboBox, filtroStatoComboBox, searchTextField, tipoRicercaComboBox);
-        GestoreLibreria.getInstance().addObserver(this);
 
-        update();
+        aggiornaDati(); // inizializza la tabella con i dati
+    }
+
+    public void aggiornaDati() {
+        List<Libro> tuttiLibri = GestoreLibreria.getInstance().getLibri();
+        filtroLibroManager.aggiornaFiltriDisponibili(tuttiLibri);
+        applicaFiltro();
     }
 
     @FXML
     private void applicaFiltro() {
         List<Libro> tuttiLibri = GestoreLibreria.getInstance().getLibri();
-
-        // Applica il filtro tramite il FiltroLibroManager
         List<Libro> libriFiltrati = filtroLibroManager.applicaFiltri(tuttiLibri);
 
-        // Aggiorna la TableView con i libri filtrati
+        // Aggiungi listener a ogni checkbox selezionata
+        for (Libro libro : libriFiltrati) {
+            libro.selezionatoProperty().addListener((obs, oldVal, newVal) -> aggiornaVisibilita());
+        }
+
         libriTableView.getItems().setAll(libriFiltrati);
         aggiornaVisibilita();
     }
-
-    @Override
-    public void update() {
-        // Qui potresti avere un callback per aggiornare i filtri disponibili
-        List<Libro> tuttiLibri = GestoreLibreria.getInstance().getLibri();
-        filtroLibroManager.aggiornaFiltriDisponibili(tuttiLibri);
-        applicaFiltro(); // Applica i filtri alla lista di libri
-
-        // Altri aggiornamenti se necessari
-        aggiornaVisibilita();
-    }
-
 
     @FXML
     public void libroController(ActionEvent event) {
@@ -105,7 +97,7 @@ public class MainController implements Observer {
             Parent root = loader.load();
 
             LibroController controller = loader.getController();
-            controller.setCallback(this::update);
+            controller.setCallback(this::aggiornaDati); // aggiorna dopo salvataggio
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -122,6 +114,7 @@ public class MainController implements Observer {
             if (libro.isSelezionato()) daRimuovere.add(libro);
         }
         GestoreLibreria.getInstance().rimuoviLibro(daRimuovere);
+        aggiornaDati(); // aggiorna la vista
     }
 
     @FXML
@@ -129,7 +122,7 @@ public class MainController implements Observer {
         for (Libro libro : GestoreLibreria.getInstance().getLibri()) {
             if (libro.isSelezionato()) {
                 GestoreLibreria.getInstance().setLibroModifica(libro);
-                break; // Modifica uno solo
+                break;
             }
         }
         libroController(event);
@@ -142,42 +135,34 @@ public class MainController implements Observer {
         modificaButton.setVisible(selezionati == 1);
     }
 
-
-
+    // Comandi menu
     @FXML
     public void onNuovo(ActionEvent event) {
-       new NuovoCommand(this).esegui();
+        new NuovoCommand(this).esegui();
     }
-
 
     @FXML
     public void onApri(ActionEvent event) {
-         new ApriFileCommand(this).esegui();
+        new ApriFileCommand(this).esegui();
     }
 
     @FXML
     public void onSalva(ActionEvent event) {
-       new SalvaFileCommand(this).esegui();
+        new SalvaFileCommand(this).esegui();
     }
 
     @FXML
     public void onSalvaCome(ActionEvent event) {
-       new SalvaComeFileCommand(this).esegui();
+        new SalvaComeFileCommand(this).esegui();
     }
-
-
 
     @FXML
     public void onEsci(ActionEvent event) {
-      new EsciCommand(this).esegui();
+        new EsciCommand(this).esegui();
     }
 
     @FXML
     public void onAbout(ActionEvent event) {
         new OnAboutCommand().esegui();
     }
-
-
-
-
 }

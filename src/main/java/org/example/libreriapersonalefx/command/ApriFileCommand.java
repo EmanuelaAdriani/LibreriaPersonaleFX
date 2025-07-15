@@ -40,7 +40,7 @@ public class ApriFileCommand implements Command {
                     return;
                 }
                 GestoreLibreria.getInstance().setLastUsedFile(file);
-                mainController.update();
+                mainController.aggiornaDati();
             } catch (IOException e) {
                 mostraErrore("Errore caricamento file: " + e.getMessage());
             }
